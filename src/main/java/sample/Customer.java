@@ -69,4 +69,12 @@ public class Customer {
     public double getCompanyOverdraftDiscount() {
         return companyOverdraftDiscount;
     }
+
+    public String getFullName() {
+        return name + " " + surname + " ";
+    }
+
+    public String printCustomer() {
+        return getFullName() + " " + email + " ";
+    }
 }

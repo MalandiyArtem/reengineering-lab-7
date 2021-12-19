@@ -100,4 +100,10 @@ public class Account {
     public void setCurrency(String currency) {
         this.currency = currency;
     }
+
+    public String printCustomerDaysOverdrawn(Customer customer) {
+        String fullName = customer.getFullName();
+        String accountDescription = "Account:\nIBAN: " + iban + ";\nDays Overdrawn: " + daysOverdrawn;
+        return fullName + accountDescription;
+    }
 }
