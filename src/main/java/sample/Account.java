@@ -4,7 +4,6 @@ public class Account extends AccountMoney {
     private String iban;
     private AccountType type;
     private int daysOverdrawn;
-    private String currency;
     private Customer customer;
 
     public Account(AccountType type, int daysOverdrawn) {
@@ -83,15 +82,6 @@ public class Account extends AccountMoney {
     public String printCustomer() {
         return customer.getName() + " " + customer.getEmail();
     }
-
-    public String getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(String currency) {
-        this.currency = currency;
-    }
-
     public String printCustomerDaysOverdrawn(Customer customer) {
         String fullName = customer.getFullName();
         String accountDescription = "Account:\nIBAN: " + iban + ";\nDays Overdrawn: " + daysOverdrawn;
