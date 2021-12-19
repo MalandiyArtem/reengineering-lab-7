@@ -37,7 +37,6 @@ public class Customer {
         boolean isPremium = account.getType().isPremium();
 
         if (account.getMoney() < 0) {
-            // 50 percent discount for overdraft for premium account
             account.setMoney((account.getMoney() - sum) - sum * account.overdraftFee() * (isPremium ?
                     (isCompany ? companyOverdraftDiscount / 2 : 1) :
                     (isCompany ? companyOverdraftDiscount : 1))
