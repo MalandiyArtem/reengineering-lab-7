@@ -2,13 +2,13 @@ package main.java.sample;
 
 public class Account extends AccountMoney {
     private String iban;
-    private AccountType type;
+    private boolean isPremium;
     private int daysOverdrawn;
     private Customer customer;
 
-    public Account(AccountType type, int daysOverdrawn) {
+    public Account(boolean isPremium, int daysOverdrawn) {
         super();
-        this.type = type;
+        this.isPremium = isPremium;
         this.daysOverdrawn = daysOverdrawn;
     }
 
@@ -20,7 +20,7 @@ public class Account extends AccountMoney {
     }
 
     private void setOverdraft(double sum) {
-        int discount = type.isPremium() ? 2 : 1;
+        int discount = isPremium ? 2 : 1;
         double factor = customer.getCustomerType() == CustomerType.COMPANY ? customer.getCompanyOverdraftDiscount() / discount : 1;
 
         if (getMoney() < 0)
@@ -30,7 +30,7 @@ public class Account extends AccountMoney {
 
     @Override
     public String toString() {
-        return "Account:\nIBAN: " + iban + ";\nMoney: " + getMoney() + ";\nAccount Type: " + type;
+        return "Account:\nIBAN: " + iban + ";\nMoney: " + getMoney() + ";\nAccount Type: " + isPremium;
     }
 
     public double bankcharge() {
@@ -41,7 +41,7 @@ public class Account extends AccountMoney {
     }
 
     private double overdraftCharge() {
-        if (type.isPremium()) {
+        if (isPremium) {
             double result = 10;
             if (getDaysOverdrawn() > 7)
                 result += (getDaysOverdrawn() - 7) * 1.0;
@@ -50,7 +50,7 @@ public class Account extends AccountMoney {
     }
 
     public double overdraftFee() {
-        if (type.isPremium())
+        if (isPremium)
             return 0.10;
         else return 0.20;
     }
@@ -75,8 +75,12 @@ public class Account extends AccountMoney {
         this.customer = customer;
     }
 
-    public AccountType getType() {
-        return type;
+    public String getType() {
+        return isPremium ? "Premium" : "Normal";
+    }
+
+    public boolean isPremium() {
+        return isPremium;
     }
 
     public String printCustomer() {
