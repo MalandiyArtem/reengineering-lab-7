@@ -16,29 +16,12 @@ public class Customer {
         this.account = account;
     }
 
-    // use only to create companies
     public Customer(String name, String email, Account account, double companyOverdraftDiscount) {
         this.name = name;
         this.email = email;
         this.customerType = CustomerType.COMPANY;
         this.account = account;
         this.companyOverdraftDiscount = companyOverdraftDiscount;
-    }
-
-    public void withdraw(double sum, String currency) {
-        if (!account.getCurrency().equals(currency)) {
-            throw new RuntimeException("Can't extract withdraw " + currency);
-        }
-        setMoney(sum);
-    }
-
-    private void setMoney(double sum) {
-        int discount = account.getType().isPremium() ? 2 : 1;
-        double factor = customerType == CustomerType.COMPANY ? companyOverdraftDiscount / discount : 1;
-
-        if (account.getMoney() < 0)
-            account.setMoney((account.getMoney() - sum) - sum * account.overdraftFee() * factor);
-        else account.setMoney(account.getMoney() - sum);
     }
 
     public String getName() {
@@ -80,7 +63,10 @@ public class Customer {
     }
 
     public String printCustomerAccount() {
-        return "Account: IBAN: " + account.getIban() + ", Money: "
-                + account.getMoney() + ", Account type: " + account.getType();
+        return account.toString();
+    }
+
+    public double getCompanyOverdraftDiscount() {
+        return companyOverdraftDiscount;
     }
 }
