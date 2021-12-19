@@ -33,15 +33,12 @@ public class Customer {
     }
 
     private void setMoney(double sum) {
-        boolean isCompany = customerType == CustomerType.COMPANY;
-        boolean isPremium = account.getType().isPremium();
+        int discount = account.getType().isPremium() ? 2 : 1;
+        double factor = customerType == CustomerType.COMPANY ? companyOverdraftDiscount / discount : 1;
 
-        if (account.getMoney() < 0) {
-            account.setMoney((account.getMoney() - sum) - sum * account.overdraftFee() * (isPremium ?
-                    (isCompany ? companyOverdraftDiscount / 2 : 1) :
-                    (isCompany ? companyOverdraftDiscount : 1))
-            );
-        } else account.setMoney(account.getMoney() - sum);
+        if (account.getMoney() < 0)
+            account.setMoney((account.getMoney() - sum) - sum * account.overdraftFee() * factor);
+        else account.setMoney(account.getMoney() - sum);
     }
 
     public String getName() {
