@@ -1,10 +1,9 @@
 package main.java.sample;
 
-public class Account {
+public class Account extends AccountMoney {
     private String iban;
     private AccountType type;
     private int daysOverdrawn;
-    private double money;
     private String currency;
     private Customer customer;
 
@@ -25,14 +24,14 @@ public class Account {
         int discount = type.isPremium() ? 2 : 1;
         double factor = customer.getCustomerType() == CustomerType.COMPANY ? customer.getCompanyOverdraftDiscount() / discount : 1;
 
-        if (money < 0)
-            setMoney((money - sum) - sum * overdraftFee() * factor);
-        else setMoney(money - sum);
+        if (getMoney() < 0)
+            setMoney((getMoney() - sum) - sum * overdraftFee() * factor);
+        else setMoney(getMoney() - sum);
     }
 
     @Override
     public String toString() {
-        return "Account:\nIBAN: " + iban + ";\nMoney: " + money + ";\nAccount Type: " + type;
+        return "Account:\nIBAN: " + iban + ";\nMoney: " + getMoney() + ";\nAccount Type: " + type;
     }
 
     public double bankcharge() {
@@ -67,14 +66,6 @@ public class Account {
 
     public void setIban(String iban) {
         this.iban = iban;
-    }
-
-    public void setMoney(double money) {
-        this.money = money;
-    }
-
-    public double getMoney() {
-        return money;
     }
 
     public Customer getCustomer() {
